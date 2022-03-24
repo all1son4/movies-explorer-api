@@ -1,6 +1,6 @@
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
 const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
@@ -9,25 +9,27 @@ const ConflictError = require('../errors/conflict-error');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUser = (req, res, next) => {
-  const id = req.user._id
+  const id = req.user._id;
 
   return User
-  .findById(id)
-  .orFail(new NotFoundError(`Пользователь с id: ${id} не найден`))
-  .then((user) => res.status(200).send(user))
-  .catch((err) => {
-    next(err);
-  });
-}
+    .findById(id)
+    .orFail(new NotFoundError(`Пользователь с id: ${id} не найден`))
+    .then((user) => res.status(200).send(user))
+    .catch((err) => {
+      next(err);
+    });
+};
 
 const updateUser = (req, res, next) => {
   const id = req.user._id;
   const { name, email } = req.body;
 
-  User 
-    .findByIdAndUpdate(id, 
-                      { name, email }, 
-                      { new: true, runValidators: true})
+  User
+    .findByIdAndUpdate(
+      id,
+      { name, email },
+      { new: true, runValidators: true },
+    )
     .orFail(new NotFoundError(`Пользователь с id ${id} не найден`))
     .then((user) => res.send(user))
     .catch((err) => {
@@ -36,8 +38,8 @@ const updateUser = (req, res, next) => {
       } else {
         next(err);
       }
-    })              
-}
+    });
+};
 
 const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -68,7 +70,7 @@ const signin = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
       res.cookie('jwt', token, {
-        expire: 3600000 * 24 * 7 + Date.now(), httpOnly: true, sameSite: 'None', secure: true
+        expire: 3600000 * 24 * 7 + Date.now(), httpOnly: true, sameSite: 'None', secure: true,
       })
         .send(user.toJSON());
     })
@@ -77,7 +79,7 @@ const signin = (req, res, next) => {
 
 const signout = (req, res) => {
   res.cookie('jwt', 'none', {
-    expire: new Date('1970-01-01T00:00:00Z'), httpOnly: true, sameSite: 'None', secure: true
+    expire: new Date('1970-01-01T00:00:00Z'), httpOnly: true, sameSite: 'None', secure: true,
   }).status(200).send({ message: 'Токен удален' });
 };
 
@@ -86,5 +88,5 @@ module.exports = {
   updateUser,
   createUser,
   signin,
-  signout
-}
+  signout,
+};

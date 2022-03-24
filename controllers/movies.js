@@ -7,7 +7,7 @@ const getSavedMovies = (req, res, next) => {
   const owner = req.user._id;
 
   Movie
-    .find({owner})
+    .find({ owner })
     .orFail(new NotFoundError(`У пользователя с id ${owner} нет сохраненных фильмов`))
     .then((movies) => res.status(200).send(movies))
     .catch((err) => {
@@ -20,7 +20,7 @@ const createMovie = (req, res, next) => {
 
   Movie
     .create({ owner, ...req.body })
-    .then((movie)=> res.status(200).send(movie))
+    .then((movie) => res.status(200).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
@@ -28,14 +28,14 @@ const createMovie = (req, res, next) => {
         next(err);
       }
     });
-}
+};
 
 const deleteMovie = (req, res, next) => {
   const id = req.params.movieId;
 
   Movie
     .findById(id)
-    .orFail(new NotFoundError(`Такой фильм не найден`))
+    .orFail(new NotFoundError('Такой фильм не найден'))
     .then((movie) => {
       if (!movie.owner.equals(req.user._id)) {
         return next(new ForbiddenError('Не трогайте чужие фильмы'));
@@ -51,10 +51,10 @@ const deleteMovie = (req, res, next) => {
         next(err);
       }
     });
-}
+};
 
 module.exports = {
   getSavedMovies,
   createMovie,
-  deleteMovie
-}
+  deleteMovie,
+};

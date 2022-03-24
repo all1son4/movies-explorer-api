@@ -23,7 +23,7 @@ router.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), signin);
-router.get('/logout', signout);
+router.get('/signout', signout);
 router.use(auth);
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);

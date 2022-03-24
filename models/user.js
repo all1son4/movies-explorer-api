@@ -10,20 +10,20 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (v) => validator.isEmail(v),
-      message: "Wrong Email"
-    }
+      message: 'Wrong Email',
+    },
   },
   password: {
     type: String,
     required: true,
-    select: false
+    select: false,
   },
   name: {
     type: String,
     required: true,
     minlenght: 2,
-    maxlenght: 30
-  }
+    maxlenght: 30,
+  },
 }, { versionKey: false });
 
 userSchema.statics.findUserByCredentials = function (email, password) {
