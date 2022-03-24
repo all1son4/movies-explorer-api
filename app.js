@@ -10,15 +10,15 @@ const routes = require('./routes');
 const errorHandler = require('./middleware/error-handler');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, DB_ROOT } = process.env;
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/diplomadb', {
+mongoose.connect(DB_ROOT, {
   useNewUrlParser: true,
 });
 
 app.use(cors({
-  origin: [ 'https://mestoofallison.nomoredomains.work', 'http://mestoofallison.nomoredomains.work' ],
+  origin: [ 'https://localhost:3001', 'http://localhost:3001' ],
   credentials: true,
 }));
 
