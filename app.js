@@ -18,7 +18,7 @@ mongoose.connect(DB_ROOT, {
 });
 
 app.use(cors({
-  origin: ['https://localhost:3001', 'http://localhost:3001'],
+  origin: ['https://localhost:3000', 'http://localhost:3000'],
   credentials: true,
 }));
 
