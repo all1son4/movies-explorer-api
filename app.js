@@ -10,7 +10,7 @@ const routes = require('./routes');
 const errorHandler = require('./middleware/error-handler');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 
-const { PORT = 3000, DB_ROOT } = process.env;
+const { PORT = 3000, DB_ROOT = 'mongodb://localhost:27017/diplomadb' } = process.env;
 const app = express();
 
 mongoose.connect(DB_ROOT, {
