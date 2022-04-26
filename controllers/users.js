@@ -6,7 +6,7 @@ const NotFoundError = require('../errors/not-found-error');
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const {NODE_ENV, JWT_SECRET} = process.env;
 
 const getUser = (req, res, next) => {
   const id = req.user._id;
@@ -14,7 +14,7 @@ const getUser = (req, res, next) => {
   return User
     .findById(id)
     .orFail(new NotFoundError(`Пользователь с id: ${id} не найден`))
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.send(user))
     .catch((err) => {
       next(err);
     });
@@ -22,19 +22,21 @@ const getUser = (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   const id = req.user._id;
-  const { name, email } = req.body;
+  const {name, email} = req.body;
 
   User
     .findByIdAndUpdate(
       id,
-      { name, email },
-      { new: true, runValidators: true },
+      {name, email},
+      {new: true, runValidators: true},
     )
     .orFail(new NotFoundError(`Пользователь с id ${id} не найден`))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
+      } else if (err.code === 11000) {
+        next(new ConflictError('Пользователь с данным email уже существует'));
       } else {
         next(err);
       }
@@ -42,7 +44,7 @@ const updateUser = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  const { name, email, password } = req.body;
+  const {name, email, password} = req.body;
 
   bcrypt
     .hash(password, 10)
@@ -62,12 +64,12 @@ const createUser = (req, res, next) => {
 };
 
 const signin = (req, res, next) => {
-  const { email, password } = req.body;
+  const {email, password} = req.body;
 
   return User
     .findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
+      const token = jwt.sign({_id: user._id}, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
       res.cookie('jwt', token, {
         expire: 3600000 * 24 * 7 + Date.now(), httpOnly: true, sameSite: 'None', secure: true,
@@ -80,7 +82,7 @@ const signin = (req, res, next) => {
 const signout = (req, res) => {
   res.cookie('jwt', 'none', {
     expire: new Date('1970-01-01T00:00:00Z'), httpOnly: true, sameSite: 'None', secure: true,
-  }).status(200).send({ message: 'Токен удален' });
+  }).status(200).send({message: 'Токен удален'});
 };
 
 module.exports = {
