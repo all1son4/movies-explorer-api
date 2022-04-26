@@ -5,13 +5,18 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const helmet = require('helmet')
 const cors = require('cors');
 const routes = require('./routes');
 const errorHandler = require('./middleware/error-handler');
 const { requestLogger, errorLogger } = require('./middleware/logger');
+const limiter = require('./middleware/rate-limiter')
 
 const { PORT = 3000, DB_ROOT = 'mongodb://localhost:27017/diplomadb' } = process.env;
 const app = express();
+app.use(helmet());
+app.use(limiter)
+
 
 mongoose.connect(DB_ROOT, {
   useNewUrlParser: true,
