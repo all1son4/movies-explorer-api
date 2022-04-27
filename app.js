@@ -15,7 +15,6 @@ const limiter = require('./middleware/rate-limiter')
 const { PORT = 3000, DB_ROOT = 'mongodb://localhost:27017/diplomadb' } = process.env;
 const app = express();
 app.use(helmet());
-app.use(limiter)
 
 
 mongoose.connect(DB_ROOT, {
@@ -34,6 +33,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(requestLogger);
+app.use(limiter)
 
 app.get('/crash-test', () => {
   setTimeout(() => {
