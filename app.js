@@ -20,8 +20,8 @@ mongoose.connect(DB_ROOT, {
 app.use(cors({
   origin: ['https://localhost:3000',
     'http://localhost:3000',
-    'http://movieexplorer.allison.api.nomoredomains.work',
-    'https://movieexplorer.allison.api.nomoredomains.work'],
+    'http:// api.movieexplorer.allison.nomoredomains.work',
+    'https:// api.movieexplorer.allison.nomoredomains.work'],
   credentials: true,
 }));
 
