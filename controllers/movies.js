@@ -9,7 +9,7 @@ const getSavedMovies = (req, res, next) => {
   Movie
     .find({ owner })
     .orFail(new NotFoundError(`У пользователя с id ${owner} нет сохраненных фильмов`))
-    .then((movies) => res.status(200).send(movies))
+    .then((movies) => res.send(movies))
     .catch((err) => {
       next(err);
     });
@@ -20,7 +20,7 @@ const createMovie = (req, res, next) => {
 
   Movie
     .create({ owner, ...req.body })
-    .then((movie) => res.status(200).send(movie))
+    .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
@@ -43,7 +43,7 @@ const deleteMovie = (req, res, next) => {
 
       return movie.remove();
     })
-    .then(() => res.status(200).send({ message: 'Фильм удален' }))
+    .then(() => res.send({ message: 'Фильм удален' }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Некорректный id'));
