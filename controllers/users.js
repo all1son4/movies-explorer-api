@@ -88,7 +88,7 @@ const signin = (req, res, next) => {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: 'None',
-        secure: false,
+        secure: true,
         overwrite: true
       })
         .send(user.toJSON());
@@ -106,7 +106,7 @@ const signout = (req, res) => {
   res.cookie('jwt', 'none', {
     httpOnly: true,
     sameSite: 'None',
-    secure: false,
+    secure: true,
     overwrite: true
   });
   res.status(200)
