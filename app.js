@@ -1,4 +1,5 @@
-require('dotenv').config();
+require('dotenv')
+    .config();
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -14,15 +15,17 @@ const { PORT = 3000, DB_ROOT } = process.env;
 const app = express();
 
 mongoose.connect(DB_ROOT, {
-  useNewUrlParser: true,
+    useNewUrlParser: true,
 });
 
 app.use(cors({
-  origin: ['https://localhost:3000',
-    'http://localhost:3000',
-    'http:// api.movieexplorer.allison.nomoredomains.work',
-    'https:// api.movieexplorer.allison.nomoredomains.work'],
-  credentials: true,
+    origin: [
+        'http://localhost:3000/',
+        'https://localhost:3000/',
+        'http://movieexplorer.allison.nomoredomains.xyz',
+        'https://movieexplorer.allison.nomoredomains.xyz'
+    ],
+    credentials: true,
 }));
 
 app.use(bodyParser.json());
@@ -31,9 +34,9 @@ app.use(cookieParser());
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
+    setTimeout(() => {
+        throw new Error('Сервер сейчас упадёт');
+    }, 0);
 });
 
 app.use(routes);
