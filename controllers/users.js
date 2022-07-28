@@ -95,13 +95,14 @@ const signin = (req, res, next) => {
 };
 
 const signout = (req, res) => {
-    res.cookie('jwt', 'none', {
-        expire: new Date('1970-01-01T00:00:00Z'),
-        httpOnly: true,
-        sameSite: 'None',
-        secure: true,
-    });
-    res.clearCookie('jwt');
+    // res.cookie('jwt', 'none', {
+    //     expire: new Date('1970-01-01T00:00:00Z'),
+    //     httpOnly: true,
+    //     sameSite: 'None',
+    //     secure: true,
+    // });
+    // res.clearCookie('jwt');
+  res.cookie('jwt', '', {maxAge: 1})
     res.status(200)
         .send({ message: 'Токен удален' });
 };
