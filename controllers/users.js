@@ -83,30 +83,29 @@ const signin = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
-      res.cookie('jwt', token, {
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        sameSite: 'None',
-        secure: true,
-      })
-        .send(user.toJSON());
-    })
-    .catch(next);
+            res.cookie('jwt', token, {
+                expire: 1000 * 60 * 60 * 24 * 7 + new Date().getTime(),
+                httpOnly: true,
+                sameSite: 'None',
+                secure: true,
+            })
+                .send(user.toJSON());
+        })
+        .catch(next);
 };
 
 const signout = (req, res) => {
-  // res.cookie('jwt', 'none', {
-  //   // expire: new Date(Date.now() + 5 * 1000),
-  //   maxAge: (1),
-  //   httpOnly: true,
-  //   sameSite: 'None',
-  //   secure: true,
-  // });
+  res.cookie('jwt', '', {
+    expires: new Date(),
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+  });
   // res.clearCookie();
-  res.clearCookie("jwt");
+  // res.clearCookie("jwt");
   res.status(200)
     .send({ message: 'Токен удален' });
-  res.end()
+  // res.end()
 };
 
 module.exports = {
