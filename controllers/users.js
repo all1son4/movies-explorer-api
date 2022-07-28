@@ -96,7 +96,7 @@ const signin = (req, res, next) => {
 
 const signout = (req, res) => {
   res.cookie('jwt', '', {
-    expires: Date.now(),
+    expires: 1,
     httpOnly: true,
     sameSite: 'None',
     secure: true,
