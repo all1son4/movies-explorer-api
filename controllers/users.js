@@ -14,8 +14,7 @@ const getUser = (req, res, next) => {
   return User
     .findById(id)
     .orFail(new NotFoundError(`Пользователь с id: ${id} не найден`))
-    .then((user) => res.status(200)
-      .send(user))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       next(err);
     });
@@ -28,22 +27,14 @@ const updateUser = (req, res, next) => {
   User
     .findByIdAndUpdate(
       id,
-      {
-        name,
-        email
-      },
-      {
-        new: true,
-        runValidators: true
-      },
+      { name, email },
+      { new: true, runValidators: true },
     )
     .orFail(new NotFoundError(`Пользователь с id ${id} не найден`))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError(`${Object.values(err.errors)
-          .map((error) => error.message)
-          .join(', ')}`));
+        next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
       } else {
         next(err);
       }
@@ -56,17 +47,12 @@ const createUser = (req, res, next) => {
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
-      name,
-      email,
-      password: hash,
+      name, email, password: hash,
     }))
-    .then((data) => res.status(201)
-      .send(data))
+    .then((data) => res.status(201).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError(`${Object.values(err.errors)
-          .map((error) => error.message)
-          .join(', ')}`));
+        next(new BadRequestError(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
       } else if (err.code === 11000) {
         next(new ConflictError('Пользователь с данным email уже существует'));
       } else {
@@ -84,10 +70,7 @@ const signin = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
       res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7 + Date.now(),
-        httpOnly: true,
-        sameSite: 'None',
-        secure: true,
+        expire: 3600000 * 24 * 7 + Date.now(), httpOnly: true, sameSite: 'None', secure: true,
       })
         .send(user.toJSON());
     })
@@ -95,17 +78,11 @@ const signin = (req, res, next) => {
 };
 
 const signout = (req, res) => {
-  res.cookie('jwt', '', {
-    expires: 1,
-    httpOnly: true,
-    sameSite: 'None',
-    secure: true,
-  });
-  // res.clearCookie();
-  // res.clearCookie("jwt");
-  res.status(200)
-    .send({ message: 'Токен удален' });
-  // res.end()
+  res.cookie('jwt', 'none', {
+    expire: new Date('1970-01-01T00:00:00Z'), httpOnly: true, sameSite: 'None', secure: true,
+  }).status(200).send({ message: 'Токен удален' });
+  res.clearCookie();
+  res.end()
 };
 
 module.exports = {
