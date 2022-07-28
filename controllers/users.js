@@ -83,20 +83,20 @@ const signin = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
-            res.cookie('jwt', token, {
-                expire: 1000 * 60 * 60 * 24 * 7,
-                httpOnly: true,
-                sameSite: 'None',
-                secure: true,
-            })
-                .send(user.toJSON());
-        })
-        .catch(next);
+      res.cookie('jwt', token, {
+        maxAge: 3600000 * 24 * 7 + Date.now(),
+        httpOnly: true,
+        sameSite: 'None',
+        secure: true,
+      })
+        .send(user.toJSON());
+    })
+    .catch(next);
 };
 
 const signout = (req, res) => {
   res.cookie('jwt', '', {
-    expires: new Date(),
+    expires: Date.now(),
     httpOnly: true,
     sameSite: 'None',
     secure: true,
