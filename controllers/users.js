@@ -89,6 +89,7 @@ const signin = (req, res, next) => {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
+        overwrite: true
       })
         .send(user.toJSON());
     })
@@ -102,15 +103,15 @@ const signout = (req, res) => {
   // res.clearCookie('jwt',  {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  req.cookie.clearCookie('jwt')
-  res.clearCookie('jwt',{
+  res.cookie('jwt', 'none', {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
+    overwrite: true
   });
   res.status(200)
     .send({ message: 'Токен удален' });
-  res.end()
+  res.end();
 };
 
 module.exports = {
