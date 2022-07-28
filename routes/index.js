@@ -23,7 +23,7 @@ router.post('/signin', celebrate({
   }),
 }), signin);
 
-router.get('/signout', signout);
+router.post('/signout', signout);
 router.use(auth);
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);

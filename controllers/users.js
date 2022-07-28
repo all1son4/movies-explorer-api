@@ -96,17 +96,9 @@ const signin = (req, res, next) => {
 };
 
 const signout = (req, res) => {
-  res.cookie('jwt', 'none', {
-    maxAge: new Date('1970-01-01T00:00:00Z'),
-    httpOnly: true,
-    sameSite: 'None',
-    secure: true,
-  })
+ res.clearCookie('jwt')
     .status(200)
     .send({ message: 'Токен удален' });
-  res.redirect('/signin')
-  res.end();
-
 };
 
 module.exports = {
