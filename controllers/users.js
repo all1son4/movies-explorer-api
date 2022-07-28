@@ -96,12 +96,13 @@ const signin = (req, res, next) => {
 };
 
 const signout = (req, res) => {
-  res.cookie('jwt', 'none', {
-    maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
-  })
-  res.clearCookie('jwt',  {
-    maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
-  })
+  // res.cookie('jwt', 'none', {
+  //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
+  // })
+  // res.clearCookie('jwt',  {
+  //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
+  // })
+  res.clearCookie('jwt', {domain: 'api.movieexplorer.allison.nomoredomains.work', path: '/'})
     res.status(200).send({ message: 'Токен удален' });
 };
 
