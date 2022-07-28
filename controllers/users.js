@@ -85,7 +85,7 @@ const signin = (req, res, next) => {
 
       res.cookie('jwt', token, {
         // expire: 3600000 * 24 * 7 + Date.now(),
-        maxAge: 3600000 * 24 * 7 + Date.now(),
+        maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: 'None',
         secure: true,
@@ -97,7 +97,7 @@ const signin = (req, res, next) => {
 
 const signout = (req, res) => {
   res.cookie('jwt', 'none', {
-    maxAge: new Date('1970-01-01T00:00:00Z'), httpOnly: true, sameSite: 'None', secure: true,
+    maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   }).status(200).send({ message: 'Токен удален' });
 };
 
