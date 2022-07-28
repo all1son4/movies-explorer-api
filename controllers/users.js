@@ -108,8 +108,17 @@ const signout = (req, res) => {
     sameSite: 'None',
     secure: true,
   });
+  res.clearCookie('jwt',{
+    maxAge: 1,
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+  })
   res.status(200)
     .send({ message: 'Токен удален' });
+  req.session.destroy(function (err) {
+    res.redirect('/');
+  });
   res.end()
 };
 
