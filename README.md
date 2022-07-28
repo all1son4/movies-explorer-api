@@ -2,4 +2,4 @@
 Backend part of Diploma
 
 
-Domen name: [https://mestoofallison.nomoredomains.work](https://mestoofallison.nomoredomains.work)
+Domain name: [https://mestoofallison.nomoredomains.work](https://mestoofallison.nomoredomains.work)
