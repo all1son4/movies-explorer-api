@@ -102,6 +102,7 @@ const signout = (req, res) => {
   // res.clearCookie('jwt',  {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
+  req.cookie.clearCookie('jwt')
   res.clearCookie('jwt',{
     httpOnly: true,
     sameSite: 'None',
