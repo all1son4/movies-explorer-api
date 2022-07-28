@@ -103,9 +103,10 @@ const signout = (req, res) => {
   //   secure: true,
   // });
   // res.clearCookie();
-  res.cookie('jwt', 'none', {maxAge: 5000})
+  res.clearCookie("jwt");
   res.status(200)
     .send({ message: 'Токен удален' });
+  res.end()
 };
 
 module.exports = {
