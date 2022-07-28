@@ -84,7 +84,7 @@ const signin = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
             res.cookie('jwt', token, {
-                expire: 1000 * 60 * 60 * 24 * 7 + new Date().getTime(),
+                expire: 1000 * 60 * 60 * 24 * 7,
                 httpOnly: true,
                 sameSite: 'None',
                 secure: true,
