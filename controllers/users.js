@@ -89,7 +89,8 @@ const signin = (req, res, next) => {
         sameSite: 'None',
         secure: true,
         domain: 'api.movieexplorer.allison.nomoredomains.work',
-        path: '/'
+        path: '/',
+        overwrite: true
       })
         .send(user.toJSON());
     })
@@ -100,8 +101,9 @@ const signout = (req, res) => {
   // res.cookie('jwt', 'none', {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  res.clearCookie('jwt')
-  res.end()
+  // res.clearCookie('jwt')
+ const cookie =  req.cookie.jwt
+  res.send({cookie: cookie})
   // res.cookie('jwt', '', {
   //   // expire: 3600000 * 24 * 7 + Date.now(),
   //   maxAge: new Date(Date.now() + 5 * 1000),
