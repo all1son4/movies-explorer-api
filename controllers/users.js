@@ -101,19 +101,17 @@ const signout = (req, res) => {
   // res.cookie('jwt', 'none', {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  // res.clearCookie('jwt',  {
-  //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
-  // })
-  res.cookie('jwt', '', {
-    // expire: 3600000 * 24 * 7 + Date.now(),
-    maxAge: 1,
-    httpOnly: true,
-    sameSite: 'None',
-    secure: true,
-    domain: 'api.movieexplorer.allison.nomoredomains.work',
-    path: '/'
-  }).status(200);
-  res.end();
+  res.clearCookie('jwt').status(200).end()
+  // res.cookie('jwt', '', {
+  //   // expire: 3600000 * 24 * 7 + Date.now(),
+  //   maxAge: 1,
+  //   httpOnly: true,
+  //   sameSite: 'None',
+  //   secure: true,
+  //   domain: 'api.movieexplorer.allison.nomoredomains.work',
+  //   path: '/'
+  // }).status(200);
+  // res.end();
 };
 
 module.exports = {
