@@ -87,10 +87,9 @@ const signin = (req, res, next) => {
         maxAge: 3600000 * 24 * 7 + Date.now(),
         httpOnly: true,
         sameSite: 'None',
-        secure: true,
+        // secure: true,
         domain: 'api.movieexplorer.allison.nomoredomains.work',
         path: '/',
-        overwrite: true
       })
         .send(user.toJSON());
     })
