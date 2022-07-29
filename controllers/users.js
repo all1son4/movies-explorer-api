@@ -112,7 +112,7 @@ const signout = (req, res) => {
     secure: true,
     domain: 'api.movieexplorer.allison.nomoredomains.work',
     path: '/'
-  }).status(200).send({ message: 'Токен удален' });
+  }).status(200);
 };
 
 module.exports = {
