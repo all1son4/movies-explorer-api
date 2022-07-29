@@ -102,7 +102,7 @@ const signout = (req, res) => {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
   // res.clearCookie('jwt')
- const cookie =  req.cookie.jwt
+ const cookie =  req.cookies
   res.send({cookie: cookie})
   // res.cookie('jwt', '', {
   //   // expire: 3600000 * 24 * 7 + Date.now(),
