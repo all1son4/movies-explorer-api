@@ -101,17 +101,18 @@ const signout = (req, res) => {
   // res.cookie('jwt', 'none', {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  res.clearCookie('jwt').status(200).send({message: "Token deleted"})
-  // res.cookie('jwt', '', {
-  //   // expire: 3600000 * 24 * 7 + Date.now(),
-  //   maxAge: 1,
-  //   httpOnly: true,
-  //   sameSite: 'None',
-  //   secure: true,
-  //   domain: 'api.movieexplorer.allison.nomoredomains.work',
-  //   path: '/'
-  // }).status(200);
-  // res.end();
+  // res.clearCookie('jwt').status(200).send({message: "Токен удален"})
+  res.cookie('jwt', '', {
+    // expire: 3600000 * 24 * 7 + Date.now(),
+    expires: new Date(Date.now() + 5 * 1000),
+    // maxAge: 5*1000,
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+    domain: 'api.movieexplorer.allison.nomoredomains.work',
+    path: '/'
+  }).status(200);
+  res.end();
 };
 
 module.exports = {
