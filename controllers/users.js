@@ -89,7 +89,6 @@ const signin = (req, res, next) => {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
-        overwrite: true
       })
         .send(user.toJSON());
     })
@@ -109,7 +108,6 @@ const signout = (req, res) => {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
-    overwrite: true
   }).status(200).send({ message: 'Токен удален' });
 };
 
