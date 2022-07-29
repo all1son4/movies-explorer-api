@@ -101,7 +101,7 @@ const signout = (req, res) => {
   // res.cookie('jwt', 'none', {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  res.clearCookie('jwt').status(200).end()
+  res.clearCookie('jwt').status(200).send({message: "Token deleted"})
   // res.cookie('jwt', '', {
   //   // expire: 3600000 * 24 * 7 + Date.now(),
   //   maxAge: 1,
