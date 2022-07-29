@@ -110,10 +110,7 @@ const signout = (req, res) => {
     sameSite: 'None',
     secure: true,
     overwrite: true
-  });
-  res.status(200)
-    .send({ message: 'Токен удален' });
-  res.end();
+  }).status(200).send({ message: 'Токен удален' });
 };
 
 module.exports = {
