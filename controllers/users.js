@@ -113,6 +113,7 @@ const signout = (req, res) => {
     domain: 'api.movieexplorer.allison.nomoredomains.work',
     path: '/'
   }).status(200);
+  res.end();
 };
 
 module.exports = {
