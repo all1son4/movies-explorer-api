@@ -89,6 +89,8 @@ const signin = (req, res, next) => {
         httpOnly: true,
         sameSite: 'None',
         secure: true,
+        domain: 'api.movieexplorer.allison.nomoredomains.work',
+        path: '/'
       })
         .send(user.toJSON());
     })
@@ -108,6 +110,8 @@ const signout = (req, res) => {
     httpOnly: true,
     sameSite: 'None',
     secure: true,
+    domain: 'api.movieexplorer.allison.nomoredomains.work',
+    path: '/'
   }).status(200).send({ message: 'Токен удален' });
 };
 
