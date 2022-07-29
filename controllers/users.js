@@ -103,7 +103,14 @@ const signout = (req, res) => {
   // res.clearCookie('jwt',  {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  res.clearCookie('jwt');
+  res.cookie('jwt', '', {
+    // expire: 3600000 * 24 * 7 + Date.now(),
+    maxAge: 1,
+    httpOnly: true,
+    sameSite: 'None',
+    secure: true,
+    overwrite: true
+  });
   res.status(200)
     .send({ message: 'Токен удален' });
   res.end();
