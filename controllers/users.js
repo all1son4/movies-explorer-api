@@ -84,7 +84,7 @@ const signin = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwtsecret');
 
       res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7 + Date.now(),
+        maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: 'None',
         // secure: true,
@@ -100,9 +100,7 @@ const signout = (req, res) => {
   // res.cookie('jwt', 'none', {
   //   maxAge: 1, httpOnly: true, sameSite: 'None', secure: true,
   // })
-  // res.clearCookie('jwt')
- const cookie =  req.cookies?.jwt
-  res.send({cookie: cookie})
+  res.clearCookie('jwt').status(200).send({message: 'Токен удален'})
   // res.cookie('jwt', '', {
   //   // expire: 3600000 * 24 * 7 + Date.now(),
   //   maxAge: new Date(Date.now() + 5 * 1000),
