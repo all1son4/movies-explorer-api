@@ -13,7 +13,7 @@ router.get('/', getSavedMovies);
 router.post('/', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
+    director: Joi.string().required().min(2).max(150),
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(4),
     description: Joi.string().required().min(2).max(5000),
