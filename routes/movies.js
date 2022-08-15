@@ -12,7 +12,7 @@ const urlPattern = /^((http|https|ftp):\/\/)?(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A
 router.get('/', getSavedMovies);
 router.post('/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required().min(2).max(30),
+    country: Joi.string().required().min(2).max(150),
     director: Joi.string().required().min(2).max(150),
     duration: Joi.number().required(),
     year: Joi.string().required().min(2).max(4),
